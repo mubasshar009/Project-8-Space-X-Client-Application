@@ -1,19 +1,21 @@
-import { useRef } from "react";
+import { createContext, useState } from "react";
 import { LaunchesQuery } from "../../generated/graphql";
 import "./style.css";
 interface Props {
   data: LaunchesQuery;
 }
+export const IdContext = createContext("0");
 const Launch = ({ data }: Props) => {
-    const refID = useRef(null);
-    let handleClick = () => {
-  
-    
-    const element = refID.current;
-    console.log(element);
+  const [state,setState] = useState<string>("0");
+  let handleClick = (e:React.MouseEvent<HTMLElement>) => {
+    console.log(e.currentTarget.id);
+    setState(JSON.stringify(e.currentTarget.id));    
   };
 
   return (
+    <>
+    <IdContext.Provider value={state}></IdContext.Provider>
+
     <div className="launchDiv">
       <h3>SpaceX Launches</h3>
       <div className="launchItem">
@@ -30,11 +32,12 @@ const Launch = ({ data }: Props) => {
           {data.launches &&
             data.launches.map((launch, index) => {
               return (
-                <li
-                  key={index}
-                  className={"Item"}
-                  
+                <li 
+                key={index} className={"Item"}
+                id={JSON.stringify(launch?.flight_number)}
+                onClick={handleClick}
                 >
+                  
                   <h3>
                     {launch && launch.flight_number}.{" "}
                     {launch && launch.mission_name}
@@ -54,6 +57,7 @@ const Launch = ({ data }: Props) => {
         </ul>
       </div>
     </div>
+    </>
   );
 };
 
