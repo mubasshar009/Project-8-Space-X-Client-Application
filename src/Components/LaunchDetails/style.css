@@ -1,0 +1,20 @@
+.parent {
+    color: coral;
+    height: 600px;
+    width:800px;
+    margin-left: 20px;
+    background-color: rgb(73, 73, 73);
+    padding: 10px;
+    text-align: center;
+    border: 1px solid oldlace;
+    overflow: scroll;
+}
+.child1 {
+    display: flex;
+    justify-content: space-around;
+}
+.video {
+    border: 2px solid lawngreen;
+    margin-left: 70px;
+    width: 640px;
+}

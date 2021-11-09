@@ -1,21 +1,26 @@
-import { createContext, useState } from "react";
 import { LaunchesQuery } from "../../generated/graphql";
+import { useGlobalContext } from "../Store/Context";
 import "./style.css";
 interface Props {
   data: LaunchesQuery;
 }
-export const IdContext = createContext("0");
+
 const Launch = ({ data }: Props) => {
-  const [state,setState] = useState<string>("0");
+  let idVal;
+  const {Id,setId  } = useGlobalContext();
   let handleClick = (e:React.MouseEvent<HTMLElement>) => {
-    console.log(e.currentTarget.id);
-    setState(JSON.stringify(e.currentTarget.id));    
+  //  localStorage.setItem("TargetID",e.currentTarget.id);
+  //  console.log("Target ID = ",localStorage.getItem("TargetID"));
+    idVal = e.currentTarget.id
+    console.log("Id Val" , idVal);
+    
+    setId(idVal);
   };
+
 
   return (
     <>
-    <IdContext.Provider value={state}></IdContext.Provider>
-
+ 
     <div className="launchDiv">
       <h3>SpaceX Launches</h3>
       <div className="launchItem">
